@@ -4,6 +4,7 @@ page 50325 "PTE Gudfood Role Center"
     ApplicationArea = All;
     UsageCategory = Administration;
     Caption = 'Gudfood Role Center';
+    RefreshOnActivate = true;
 
     layout
     {
@@ -14,6 +15,10 @@ page 50325 "PTE Gudfood Role Center"
                 ApplicationArea = All;
             }
             part(GudfoodCues; "PTE Gudfood RC Cues")
+            {
+                ApplicationArea = All;
+            }
+            part(ItemsPart; "PTE Gudfood RC Items")
             {
                 ApplicationArea = All;
             }

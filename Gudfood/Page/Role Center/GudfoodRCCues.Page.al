@@ -22,21 +22,6 @@ page 50327 "PTE Gudfood RC Cues"
                     Caption = 'Items in order today';
                     ToolTip = 'Displays the number of items that are in order today';
                 }
-                // field("Earnings Yesterday"; YesterdayEarnings)
-                // {
-                //     Caption = 'Earnings Yesterday';
-                //     ToolTip = 'Displays the total price of orders yesterday';
-                //     ApplicationArea = All;
-                //     StyleExpr = YesterdayEarningsStyle;
-
-                // }
-
-                // field("Average Day Earnings"; AverageEarnings)
-                // {
-                //     Caption = 'Earnings Avg. Day';
-                //     ToolTip = 'Displays the total price of orders on an average day';
-                //     ApplicationArea = All;
-                // }
             }
         }
     }
@@ -49,11 +34,13 @@ page 50327 "PTE Gudfood RC Cues"
     var
         OrderHeader: Record "PTE Gudfood Order Header";
     begin
+        ItemsInOrder := 0;
         OrderHeader.SetRange("Order date", Today);
         OrdersToday := OrderHeader.Count();
 
         if OrderHeader.FindSet() then
             repeat
+                OrderHeader.CalcFields("Total Qty");
                 ItemsInOrder += OrderHeader."Total Qty";
             until OrderHeader.Next() = 0;
     end;
