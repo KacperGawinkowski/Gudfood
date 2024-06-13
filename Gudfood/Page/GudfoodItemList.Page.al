@@ -6,8 +6,7 @@ page 50300 "PTE Gudfood Item List"
     SourceTable = "PTE Gudfood Item";
     UsageCategory = Lists;
     CardPageId = "PTE Gudfood Item Card";
-
-    //Editable = false;
+    Editable = false;
 
     layout
     {
