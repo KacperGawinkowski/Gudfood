@@ -12,14 +12,12 @@ codeunit 50350 "PTE Gudfood Table Tests"
         Description := 'Random Description';
         Item.Init();
         Item.Description := Description;
-        Item.Insert();
+        Item.Insert(true);
 
         Item.FindLast();
 
         Assert.IsTrue(Item.Description = Description, 'Item Description should be "Random Description".');
         Assert.IsTrue(Item."No." <> '', 'Item number should not be empty.');
-
-
     end;
 
 
