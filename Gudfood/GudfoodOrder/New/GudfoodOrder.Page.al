@@ -54,7 +54,7 @@ page 50303 "PTE Gudfood Order"
                 part("Order Items"; "PTE Gudfood Order Subpage")
                 {
                     ApplicationArea = All;
-                    SubPageLink = "Order No." = FIELD("No.");
+                    SubPageLink = "Order No." = field("No.");
                     UpdatePropagation = Both;
                 }
             }

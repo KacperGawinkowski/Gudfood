@@ -87,7 +87,7 @@ page 50306 "PTE Gudfood Orders List"
                     XmlExport.Export();
 
                     TempBlob.CreateInStream(InStr);
-                    File.DownloadFromStream(InStr, 'Download &FileName', '', FileManagement.GetToFilterText('', FileName), FileName);
+                    File.DownloadFromStream(InStr, downloadTxt, '', FileManagement.GetToFilterText('', FileName), FileName);
                 end;
             }
 
@@ -119,9 +119,11 @@ page 50306 "PTE Gudfood Orders List"
                     XmlExport.Export();
 
                     TempBlob.CreateInStream(InStr);
-                    File.DownloadFromStream(InStr, 'Download &FileName', '', FileManagement.GetToFilterText('', FileName), FileName);
+                    File.DownloadFromStream(InStr, downloadTxt, '', FileManagement.GetToFilterText('', FileName), FileName);
                 end;
             }
         }
     }
+    var
+        downloadTxt: Label 'Download', MaxLength = 999, Locked = false;
 }

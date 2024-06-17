@@ -46,6 +46,7 @@ table 50302 "PTE Gudfood Order Line"
             trigger OnValidate()
             var
                 Item: Record "PTE Gudfood Item";
+                ExpirationTxt: Label '%1 has expired', Comment = '%1 is the No. of the Item', locked = false, MaxLength = 999;
             begin
                 if Item.Get("Item No.") then begin
                     Description := Item.Description;
@@ -54,7 +55,7 @@ table 50302 "PTE Gudfood Order Line"
                     Amount := Quantity * "Unit Price";
 
                     if (Item."Shelf Life" < Today) then
-                        Message('%1 has expired', Item."No.");
+                        Message(ExpirationTxt, Item."No.");
                 end;
             end;
         }
@@ -77,9 +78,11 @@ table 50302 "PTE Gudfood Order Line"
             ToolTip = 'Specifies the value of the Quantity field.';
             DataClassification = CustomerContent;
             trigger OnValidate()
+            var
+                QuantityErrorTxt: Label 'Quantity field cannot have value lower than 0!', locked = false, MaxLength = 999;
             begin
                 if Quantity < 0 then
-                    Error('Quantity field cannot have value lower than 0!');
+                    Error(QuantityErrorTxt);
 
                 Amount := Quantity * "Unit Price";
             end;
