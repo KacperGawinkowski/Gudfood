@@ -3,11 +3,12 @@ codeunit 50350 "PTE Gudfood Table Tests"
     Subtype = Test;
 
     [Test]
-    procedure TestItemTableNoSeries()
+    procedure TestGudfoodItem()
     var
         Item: Record "PTE Gudfood Item";
         Description: Text[100];
     begin
+
         Description := 'Random Description';
         Item.Init();
         Item.Description := Description;
@@ -15,8 +16,9 @@ codeunit 50350 "PTE Gudfood Table Tests"
 
         Item.FindLast();
 
+        Assert.IsTrue(Item.Description = Description, 'Item Description should be "Random Description".');
+        Assert.IsTrue(Item."No." <> '', 'Item number should not be empty.');
 
-        //Item.Description.ass.IsTrue()
 
     end;
 
