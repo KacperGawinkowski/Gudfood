@@ -72,10 +72,10 @@ page 50303 "PTE Gudfood Order"
                 ToolTip = 'Posts Gudfood order';
 
                 trigger OnAction()
+                var
+                    PostCodeunit: Codeunit "PTE Post Order";
                 begin
-                    //PostOrder();
-                    PostOrder();
-                    Rec.Delete();
+                    PostCodeunit.PostOrder(Rec);
                 end;
             }
         }
@@ -96,40 +96,4 @@ page 50303 "PTE Gudfood Order"
             }
         }
     }
-
-    //Old Posting procedure
-    // procedure PostOrder()
-    // var
-    //     OrderConverter: Codeunit "PTE Order To Posted Order";
-    // begin
-    //     OrderConverter.PostOrder(Rec);
-
-
-    //     Message('Order Posted');
-    // end;
-
-
-    procedure PostOrder()
-    var
-        PostedOrderHeader: Record "PTE Posted GF Order Header";
-        PostedOrderLine: Record "PTE Posted GF Order Line";
-        OrderLine: Record "PTE Gudfood Order Line";
-    begin
-        PostedOrderHeader.Init();
-        PostedOrderHeader.TransferFields(Rec);
-        PostedOrderHeader."Posting No." := Rec."Posting No.";
-        PostedOrderHeader.CheckAndAssignPostingNo();
-        PostedOrderHeader."Posting Date" := Today;
-        PostedOrderHeader.Insert();
-
-        OrderLine.SetRange("Order No.", Rec."No.");
-
-        if OrderLine.FindSet() then
-            repeat
-                PostedOrderLine.Init();
-                PostedOrderLine.TransferFields(OrderLine);
-                PostedOrderLine."Order No." := PostedOrderHeader."Posting No.";
-                PostedOrderLine.Insert();
-            until OrderLine.Next() = 0;
-    end;
 }

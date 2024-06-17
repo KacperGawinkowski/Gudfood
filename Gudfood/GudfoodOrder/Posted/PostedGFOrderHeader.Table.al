@@ -74,7 +74,7 @@ table 50304 "PTE Posted GF Order Header"
         }
     }
 
-    procedure CheckAndAssignPostingNo()
+    trigger OnInsert()
     begin
         if "Posting No." = '' then begin
             SalesSetup.Get();
@@ -84,8 +84,20 @@ table 50304 "PTE Posted GF Order Header"
                 "No. Series" := xRec."No. Series";
             "Posting No." := NoSeries.GetNextNo("No. Series");
         end;
-
     end;
+
+    // procedure CheckAndAssignPostingNo()
+    // begin
+    //     if "Posting No." = '' then begin
+    //         SalesSetup.Get();
+    //         SalesSetup.TestField("PTE Posted Gudfood Order Nos.");
+    //         "No. Series" := SalesSetup."PTE Posted Gudfood Order Nos.";
+    //         if NoSeries.AreRelated(SalesSetup."PTE Posted Gudfood Order Nos.", xRec."No. Series") then
+    //             "No. Series" := xRec."No. Series";
+    //         "Posting No." := NoSeries.GetNextNo("No. Series");
+    //     end;
+
+    // end;
 
     var
         SalesSetup: Record "Sales & Receivables Setup";

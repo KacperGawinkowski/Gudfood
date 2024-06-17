@@ -3,7 +3,6 @@ table 50300 "PTE Gudfood Item"
     DataClassification = CustomerContent;
     LookupPageId = "PTE Gudfood Item List";
     DrillDownPageId = "PTE Gudfood Item List";
-
     fields
     {
         field(1; "No."; Code[20])

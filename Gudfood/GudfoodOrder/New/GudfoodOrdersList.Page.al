@@ -16,12 +16,10 @@ page 50306 "PTE Gudfood Orders List"
             {
                 field("No."; Rec."No.")
                 {
-                    ToolTip = 'Specifies the value of the No. field.', Comment = '%';
                     ApplicationArea = All;
                 }
                 field("Sell-to Customer Name"; Rec."Sell-to Customer Name")
                 {
-                    ToolTip = 'Specifies the value of the Sell-to Customer Name field.', Comment = '%';
                     ApplicationArea = All;
                     DrillDown = true;
                     DrillDownPageId = "Customer Card";
@@ -39,22 +37,18 @@ page 50306 "PTE Gudfood Orders List"
                 }
                 field("Order date"; Rec."Order date")
                 {
-                    ToolTip = 'Specifies the value of the Order date field.', Comment = '%';
                     ApplicationArea = All;
                 }
                 field("Date Created"; Rec."Date Created")
                 {
-                    ToolTip = 'Specifies the value of the Date Created field.', Comment = '%';
                     ApplicationArea = All;
                 }
                 field("Total Qty"; Rec."Total Qty")
                 {
-                    ToolTip = 'Specifies the value of the Total Qty field.', Comment = '%';
                     ApplicationArea = All;
                 }
                 field("Total Amount"; Rec."Total Amount")
                 {
-                    ToolTip = 'Specifies the value of the Total Amount field.', Comment = '%';
                     ApplicationArea = All;
                 }
             }

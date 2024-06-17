@@ -8,7 +8,7 @@ table 50301 "PTE Gudfood Order Header"
         field(1; "No."; Code[20])
         {
             Caption = 'No.';
-            ToolTip = 'Specifies the value of the No. field.', Comment = '%';
+            ToolTip = 'Specifies the value of the No. field.';
             DataClassification = CustomerContent;
             Editable = false;
 
