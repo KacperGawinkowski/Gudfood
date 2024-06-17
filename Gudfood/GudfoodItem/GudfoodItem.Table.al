@@ -9,6 +9,7 @@ table 50300 "PTE Gudfood Item"
         field(1; "No."; Code[20])
         {
             Caption = 'No.';
+
             DataClassification = CustomerContent;
             trigger OnValidate()
             begin
@@ -47,6 +48,7 @@ table 50300 "PTE Gudfood Item"
 
         field(6; "Qty. Ordered"; Decimal)
         {
+            Caption = 'Qty. Ordered';
             FieldClass = FlowField;
             CalcFormula = sum("PTE Posted GF Order Line".Quantity where("Item No." = field("No.")));
             Editable = false;
@@ -54,6 +56,7 @@ table 50300 "PTE Gudfood Item"
 
         field(7; "Qty. in Order"; Decimal)
         {
+            Caption = 'Qty. in Order';
             FieldClass = FlowField;
             CalcFormula = sum("PTE Gudfood Order Line".Quantity where("Item No." = field("No.")));
             Editable = false;

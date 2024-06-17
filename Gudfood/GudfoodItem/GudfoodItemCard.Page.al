@@ -16,20 +16,17 @@ page 50301 "PTE Gudfood Item Card"
 
                 field("No."; Rec."No.")
                 {
-                    Caption = 'No.';
                     ToolTip = 'Specifies the value of the No. field.', Comment = '%';
                     ApplicationArea = All;
                     Editable = false;
                 }
                 field(Description; Rec.Description)
                 {
-                    Caption = 'Description';
                     ToolTip = 'Specifies the value of the Description field.', Comment = '%';
                     ApplicationArea = All;
                 }
                 field("Type"; Rec."Type")
                 {
-                    Caption = 'Type';
                     ToolTip = 'Specifies the value of the Type field.', Comment = '%';
                     ApplicationArea = All;
                 }
