@@ -10,5 +10,12 @@
       "path": ".AL-Go"
     }
   ],
-  "settings": {}
+
+  "settings": {
+    "al.enableCodeAnalysis": true,
+    "al.codeAnalyzers": [
+      "${CodeCop}",
+      "${PerTenantExtensionCop}",
+      "${UICop}"]
+  }
 }

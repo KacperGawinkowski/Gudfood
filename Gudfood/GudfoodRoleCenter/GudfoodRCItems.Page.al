@@ -15,25 +15,21 @@ page 50328 "PTE Gudfood RC Items"
             {
                 field("No."; Rec."No.")
                 {
-                    Caption = 'No.';
                     ToolTip = 'Specifies the value of the No. field.', Comment = '%';
                     ApplicationArea = All;
                 }
                 field(Description; Rec.Description)
                 {
-                    Caption = 'Description';
                     ToolTip = 'Specifies the value of the Description field.', Comment = '%';
                     ApplicationArea = All;
                 }
                 field("Type"; Rec."Type")
                 {
-                    Caption = 'Type';
                     ToolTip = 'Specifies the value of the Type field.', Comment = '%';
                     ApplicationArea = All;
                 }
                 field("Shelf Life"; Rec."Shelf Life")
                 {
-                    Caption = 'Shelf Life';
                     ToolTip = 'Specifies the value of the Shelf Life field.', Comment = '%';
                     ApplicationArea = All;
                 }

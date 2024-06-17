@@ -16,14 +16,10 @@ page 50306 "PTE Gudfood Orders List"
             {
                 field("No."; Rec."No.")
                 {
-                    Caption = 'No.';
-                    ToolTip = 'Specifies the value of the No. field.', Comment = '%';
                     ApplicationArea = All;
                 }
                 field("Sell-to Customer Name"; Rec."Sell-to Customer Name")
                 {
-                    Caption = 'Sell-to Customer Name';
-                    ToolTip = 'Specifies the value of the Sell-to Customer Name field.', Comment = '%';
                     ApplicationArea = All;
                     DrillDown = true;
                     DrillDownPageId = "Customer Card";
@@ -41,26 +37,18 @@ page 50306 "PTE Gudfood Orders List"
                 }
                 field("Order date"; Rec."Order date")
                 {
-                    Caption = 'Order Date';
-                    ToolTip = 'Specifies the value of the Order date field.', Comment = '%';
                     ApplicationArea = All;
                 }
                 field("Date Created"; Rec."Date Created")
                 {
-                    Caption = 'Date Created';
-                    ToolTip = 'Specifies the value of the Date Created field.', Comment = '%';
                     ApplicationArea = All;
                 }
                 field("Total Qty"; Rec."Total Qty")
                 {
-                    Caption = 'Total Qty';
-                    ToolTip = 'Specifies the value of the Total Qty field.', Comment = '%';
                     ApplicationArea = All;
                 }
                 field("Total Amount"; Rec."Total Amount")
                 {
-                    Caption = 'Total Amount';
-                    ToolTip = 'Specifies the value of the Total Amount field.', Comment = '%';
                     ApplicationArea = All;
                 }
             }
@@ -99,7 +87,7 @@ page 50306 "PTE Gudfood Orders List"
                     XmlExport.Export();
 
                     TempBlob.CreateInStream(InStr);
-                    File.DownloadFromStream(InStr, 'Download &FileName', '', FileManagement.GetToFilterText('', FileName), FileName);
+                    File.DownloadFromStream(InStr, downloadTxt, '', FileManagement.GetToFilterText('', FileName), FileName);
                 end;
             }
 
@@ -131,9 +119,11 @@ page 50306 "PTE Gudfood Orders List"
                     XmlExport.Export();
 
                     TempBlob.CreateInStream(InStr);
-                    File.DownloadFromStream(InStr, 'Download &FileName', '', FileManagement.GetToFilterText('', FileName), FileName);
+                    File.DownloadFromStream(InStr, downloadTxt, '', FileManagement.GetToFilterText('', FileName), FileName);
                 end;
             }
         }
     }
+    var
+        downloadTxt: Label 'Download', MaxLength = 999, Locked = false;
 }

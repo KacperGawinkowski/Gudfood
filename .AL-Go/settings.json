@@ -1,6 +1,6 @@
 {
   "country": "us",
-  "appFolders": [],
-  "testFolders": [],
+  "appFolders": ["Gudfood"],
+  "testFolders": ["Gudfood.Test"],
   "bcptTestFolders": []
 }

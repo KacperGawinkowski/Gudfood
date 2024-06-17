@@ -8,44 +8,53 @@ table 50304 "PTE Posted GF Order Header"
         field(1; "Posting No."; Code[20])
         {
             Caption = 'Posting No.';
+            ToolTip = 'Specifies the value of the Posting No. field.';
             DataClassification = CustomerContent;
         }
 
         field(2; "No. Series"; Code[20])
         {
+            Caption = 'No. Series';
+            ToolTip = 'Specifies the value of the No. Series field.';
             DataClassification = CustomerContent;
         }
         field(3; "Sell-to Customer No."; Code[20])
         {
             Caption = 'Sell-to Customer No.';
+            ToolTip = 'Specifies the value of the Sell-to Customer No. field.';
             DataClassification = CustomerContent;
             TableRelation = Customer;
         }
         field(4; "Sell-to Customer Name"; Text[100])
         {
             Caption = 'Sell-to Customer Name';
+            ToolTip = 'Specifies the value of the Sell-to Customer Name field.';
             DataClassification = CustomerContent;
         }
         field(5; "Order date"; Date)
         {
             Caption = 'Order date';
+            ToolTip = 'Specifies the value of the Order date field.';
             DataClassification = CustomerContent;
         }
 
         field(7; "Date Created"; Date)
         {
             Caption = 'Date Created';
+            ToolTip = 'Specifies the value of the Date Created field.';
             DataClassification = CustomerContent;
         }
         field(8; "Total Qty"; Decimal)
         {
             Caption = 'Total Qty';
+            ToolTip = 'Specifies the value of the Total Qty field.';
             FieldClass = FlowField;
             CalcFormula = sum("PTE Posted GF Order Line".Quantity where("Order No." = field("Posting No.")));
         }
         field(9; "Total Amount"; Decimal)
         {
             Caption = 'Total Amount';
+            ToolTip = 'Specifies the value of the Total Amount field.';
             FieldClass = FlowField;
             CalcFormula = sum("PTE Posted GF Order Line".Amount where("Order No." = field("Posting No.")));
         }
@@ -53,6 +62,7 @@ table 50304 "PTE Posted GF Order Header"
         field(10; "Posting Date"; Date)
         {
             Caption = 'Posting Date';
+            ToolTip = 'Specifies the value of the Posting Date field.';
             DataClassification = CustomerContent;
         }
     }
@@ -64,7 +74,7 @@ table 50304 "PTE Posted GF Order Header"
         }
     }
 
-    procedure CheckAndAssignPostingNo()
+    trigger OnInsert()
     begin
         if "Posting No." = '' then begin
             SalesSetup.Get();
@@ -74,7 +84,6 @@ table 50304 "PTE Posted GF Order Header"
                 "No. Series" := xRec."No. Series";
             "Posting No." := NoSeries.GetNextNo("No. Series");
         end;
-
     end;
 
     var

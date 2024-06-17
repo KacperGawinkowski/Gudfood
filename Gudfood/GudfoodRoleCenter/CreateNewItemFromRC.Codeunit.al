@@ -1,4 +1,4 @@
-codeunit 50300 "PTE Create New Item From RC"
+codeunit 50305 "PTE Create New Item From RC"
 {
     trigger OnRun()
     var
