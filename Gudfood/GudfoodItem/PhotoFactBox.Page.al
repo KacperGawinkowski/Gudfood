@@ -13,7 +13,6 @@ page 50302 "PTE Photo Fact Box"
             {
                 field(Photo; Rec.Picture)
                 {
-                    ToolTip = 'Specifies the picture of the item.', Comment = '%';
                     ApplicationArea = All;
                 }
             }

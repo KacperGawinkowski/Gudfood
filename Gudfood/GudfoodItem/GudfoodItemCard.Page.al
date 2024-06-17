@@ -16,7 +16,6 @@ page 50301 "PTE Gudfood Item Card"
 
                 field("No."; Rec."No.")
                 {
-                    ToolTip = 'Specifies the value of the No. field.', Comment = '%';
                     ApplicationArea = All;
                     Editable = false;
                 }
@@ -32,27 +31,23 @@ page 50301 "PTE Gudfood Item Card"
                 }
                 field("Unit Price"; Rec."Unit Price")
                 {
-                    Caption = 'Unit Price';
                     ToolTip = 'Specifies the value of the Unit Price field.', Comment = '%';
                     ApplicationArea = All;
                 }
                 field("Shelf Life"; Rec."Shelf Life")
                 {
-                    Caption = 'Shelf Life';
                     ToolTip = 'Specifies the value of the Shelf Life field.', Comment = '%';
                     ApplicationArea = All;
                 }
 
                 field("Qty. Ordered"; Rec."Qty. Ordered")
                 {
-                    Caption = 'Qty. Ordered';
                     ToolTip = 'Specifies the value of the Qty. Ordered field.', Comment = '%';
                     ApplicationArea = All;
                 }
 
                 field("Qty. in Order"; Rec."Qty. in Order")
                 {
-                    Caption = 'Qty. in Order';
                     ToolTip = 'Specifies the value of the Qty. in Order field.', Comment = '%';
                     ApplicationArea = All;
                 }

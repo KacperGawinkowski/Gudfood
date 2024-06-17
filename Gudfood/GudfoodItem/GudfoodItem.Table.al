@@ -9,7 +9,7 @@ table 50300 "PTE Gudfood Item"
         field(1; "No."; Code[20])
         {
             Caption = 'No.';
-
+            ToolTip = 'Specifies the value of the No. field.';
             DataClassification = CustomerContent;
             trigger OnValidate()
             begin
@@ -31,24 +31,28 @@ table 50300 "PTE Gudfood Item"
         field(3; Description; Text[100])
         {
             Caption = 'Description';
+            ToolTip = 'Specifies the value of the Description field.';
             DataClassification = CustomerContent;
         }
 
         field(4; "Unit Price"; Decimal)
         {
             Caption = 'Unit Price';
+            ToolTip = 'Specifies the value of the Unit Price field.';
             DataClassification = CustomerContent;
         }
 
         field(5; "Type"; enum "PTE Item Type")
         {
             Caption = 'Type';
+            ToolTip = 'Specifies the value of the Type field.';
             DataClassification = CustomerContent;
         }
 
         field(6; "Qty. Ordered"; Decimal)
         {
             Caption = 'Qty. Ordered';
+            ToolTip = 'Specifies the value of the Qty. Ordered field.';
             FieldClass = FlowField;
             CalcFormula = sum("PTE Posted GF Order Line".Quantity where("Item No." = field("No.")));
             Editable = false;
@@ -57,6 +61,7 @@ table 50300 "PTE Gudfood Item"
         field(7; "Qty. in Order"; Decimal)
         {
             Caption = 'Qty. in Order';
+            ToolTip = 'Specifies the value of the Qty. in Order field.';
             FieldClass = FlowField;
             CalcFormula = sum("PTE Gudfood Order Line".Quantity where("Item No." = field("No.")));
             Editable = false;
@@ -65,12 +70,14 @@ table 50300 "PTE Gudfood Item"
         field(8; "Shelf Life"; Date)
         {
             Caption = 'Shelf Life';
+            ToolTip = 'Specifies the value of the Shelf Life field.';
             DataClassification = CustomerContent;
         }
 
         field(9; Picture; Media)
         {
             Caption = 'Picture';
+            ToolTip = 'Specifies the value of the Picture field.';
             DataClassification = CustomerContent;
         }
     }

@@ -8,6 +8,7 @@ table 50301 "PTE Gudfood Order Header"
         field(1; "No."; Code[20])
         {
             Caption = 'No.';
+            ToolTip = 'Specifies the value of the No. field.', Comment = '%';
             DataClassification = CustomerContent;
             Editable = false;
 
@@ -28,9 +29,9 @@ table 50301 "PTE Gudfood Order Header"
         field(3; "Sell-to Customer No."; Code[20])
         {
             Caption = 'Sell-to Customer No.';
+            ToolTip = 'Specifies the value of the Sell-to Customer No. field.';
             DataClassification = CustomerContent;
             TableRelation = Customer;
-
             trigger OnValidate()
             var
                 Customer: Record Customer;
@@ -43,28 +44,33 @@ table 50301 "PTE Gudfood Order Header"
         field(4; "Sell-to Customer Name"; Text[100])
         {
             Caption = 'Sell-to Customer Name';
+            ToolTip = 'Specifies the value of the Sell-to Customer Name field.';
             DataClassification = CustomerContent;
             Editable = false;
         }
         field(5; "Order date"; Date)
         {
             Caption = 'Order date';
+            ToolTip = 'Specifies the value of the Order date field.';
             DataClassification = CustomerContent;
         }
         field(6; "Posting No."; Code[20])
         {
             Caption = 'Posting No.';
+            ToolTip = 'Specifies the value of the Posting No. field.';
             DataClassification = CustomerContent;
         }
         field(7; "Date Created"; Date)
         {
             Caption = 'Date Created';
+            ToolTip = 'Specifies the value of the Date Created field.';
             DataClassification = CustomerContent;
             Editable = false;
         }
         field(8; "Total Qty"; Decimal)
         {
             Caption = 'Total Qty';
+            ToolTip = 'Specifies the value of the Total Qty field.';
             Editable = false;
             FieldClass = FlowField;
             CalcFormula = sum("PTE Gudfood Order Line".Quantity where("Order No." = field("No.")));
@@ -72,6 +78,7 @@ table 50301 "PTE Gudfood Order Header"
         field(9; "Total Amount"; Decimal)
         {
             Caption = 'Total Amount';
+            ToolTip = 'Specifies the value of the Total Amount field.';
             Editable = false;
             FieldClass = FlowField;
             CalcFormula = sum("PTE Gudfood Order Line".Amount where("Order No." = field("No.")));

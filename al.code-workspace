@@ -12,6 +12,9 @@
   ],
   "settings": {
     "al.enableCodeAnalysis": true,
-    "al.codeAnalyzers": ["${CodeCop}","${PerTenantExtensionCop}","${UICop}"]
+    "al.codeAnalyzers": [
+      "${CodeCop}",
+      "${PerTenantExtensionCop}",
+      "${UICop}"]
   }
 }
