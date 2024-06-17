@@ -3,34 +3,36 @@ codeunit 50350 "PTE Gudfood Table Tests"
     Subtype = Test;
 
     [Test]
-    procedure TestGudfoodItem()
+    procedure TestCreateItem()
     var
-    // Item: Record "PTE Gudfood Item";
-    // SalesSetup: Record "Sales & Receivables Setup";
-    // Description: Text[100];
+        Item: Record "PTE Gudfood Item";
+        ItemCounter: Integer;
     begin
-        // if not SalesSetup.Get() then
-        //     Error('Sales & Receivables Setup is missing.');
+        Item.Init();
+        ItemCounter := Item.Count();
 
-        // if SalesSetup."PTE Gudfood Item Nos." = '' then begin
-        //     SalesSetup."PTE Gudfood Item Nos." := 'GF';
-        //     SalesSetup.Modify();
-        // end;
-        // //Error('Gudfood Item Nos. must be set up in Sales & Receivables Setup.');
+        Item.Description := 'Description';
+        Item."Shelf Life" := 0D;
+        Item.Type := "PTE Item Type"::Burger;
+        Item."Unit Price" := 7.99;
 
-        // Description := 'Random Description';
-        // Item.Init();
-        // Item.Description := Description;
-        // Item.Insert(true);
-
-        // Item.FindLast();
-
-        // Assert.IsTrue(Item.Description = Description, 'Item Description should be "Random Description".');
-        // Assert.IsTrue(Item."No." <> '', 'Item number should not be empty.');
-
-        Assert.IsTrue(true, 'Should always be true');
+        Item.Insert(true);
+        Assert.IsTrue(Item.Count() = ItemCounter + 1, 'Item.Count should have increased by 1');
     end;
 
+    [Test]
+    procedure TestCreateOrder()
+    var
+        Order: Record "PTE Gudfood Order Header";
+        OrderCounter: Integer;
+    begin
+        Order.Init();
+        OrderCounter := Order.Count();
+
+        Order."Order date" := 0D;
+        Order.Insert(true);
+        Assert.IsTrue(Order.Count() = OrderCounter + 1, 'Order.Count should have increased by 1');
+    end;
 
     var
         Assert: Codeunit "Library Assert";
