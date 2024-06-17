@@ -1,8 +1,8 @@
 {
-  "id": "131d30f1-6034-4d3c-90ab-0cc321547a20",
+  "id": "8b3239ea-aa9a-42ce-b5c0-c76b05890c2f",
   "name": "Gudfood",
-  "publisher": "Default Publisher",
-  "version": "1.0.0.1",
+  "publisher": "kagaw",
+  "version": "1.0.0.0",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -13,21 +13,19 @@
   "dependencies": [],
   "screenshots": [],
   "platform": "1.0.0.0",
-  "application": "24.0.0.0",
+  "application": "22.0.0.0",
   "idRanges": [
     {
       "from": 50300,
       "to": 50400
     }
   ],
+  "features": [
+    "NoImplicitWith"
+  ],
   "resourceExposurePolicy": {
     "allowDebugging": true,
-    "allowDownloadingSource": true,
-    "includeSourceInSymbolFile": true
-  },
-  "runtime": "13.0",
-  "features": [
-    "NoImplicitWith",
-    "TranslationFile"
-  ]
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  }
 }
