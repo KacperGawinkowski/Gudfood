@@ -131,10 +131,12 @@ codeunit 50350 "PTE Gudfood Table Tests"
     procedure TestPostOrder()
     var
         Order: Record "PTE Gudfood Order Header";
+        OrderLine: Record "PTE Gudfood Order Line";
         PostedOrder: Record "PTE Posted GF Order Header";
         PostCodeunit: Codeunit "PTE Post Order";
         OrderCounter: Integer;
         PostedOrderCounter: Integer;
+        OrderLineCounter: Integer;
     begin
         Order.Init();
         OrderCounter := Order.Count();
@@ -145,11 +147,19 @@ codeunit 50350 "PTE Gudfood Table Tests"
         Order.Insert(true);
         Assert.IsTrue(Order.Count() = OrderCounter + 1, 'Order.Count should have increased by 1');
 
+        OrderLine.Init();
+        OrderLineCounter := OrderLine.Count();
+        OrderLine."Order No." := Order."No.";
+        OrderLine.Insert(true);
+
+        Assert.IsTrue(OrderLine.Count() = OrderLineCounter + 1, 'Order Lines Count shouold have increased by 1');
 
         PostedOrderCounter := PostedOrder.Count();
         PostCodeunit.PostOrder(Order);
         Assert.IsTrue(Order.Count() = OrderCounter, 'Order.Count should have been back to original number');
         Assert.IsTrue(PostedOrder.Count() = PostedOrderCounter + 1, 'PostedOrder.Count should have increased by 1');
+
+        Assert.IsTrue(OrderLine.Count() = OrderLineCounter, 'Order Lines Count shouold be equal to original number');
 
         PostedOrder.Get(Order."Posting No.");
         PostedOrder.Delete(true);
