@@ -2,55 +2,56 @@ codeunit 50350 "PTE Gudfood Table Tests"
 {
     Subtype = Test;
 
-    // trigger OnRun()
-    // var
-    //     TableNos: Record "Sales & Receivables Setup";
-    //     NoSeries: Record "No. Series";
-    // begin
-    //     CheckAndAssignNoSeries();
-    // end;
+    trigger OnRun()
+    begin
+        CheckAndAssignNoSeries();
+    end;
 
-    // local procedure CheckAndAssignNoSeries()
-    // var
-    //     NoSeries: Record "No. Series";
-    //     NoSeriesLine: Record "No. Series Line";
-    //     SalesReceivables: Record "Sales & Receivables Setup";
-    // begin
-    //     if not NoSeries.Get('GF') then begin
-    //         NoSeries.Init();
-    //         NoSeries.Code := 'GF';
+    local procedure CheckAndAssignNoSeries()
+    var
+        NoSeries: Record "No. Series";
+        NoSeriesLine: Record "No. Series Line";
+        SalesReceivables: Record "Sales & Receivables Setup";
+    begin
+        if not NoSeries.Get('GF') then begin
+            NoSeries.Init();
+            NoSeries.Code := 'GF';
+            NoSeries."Default Nos." := true;
+            NoSeries."Manual Nos." := false;
+            NoSeries.Insert(true);
 
-    //         NoSeriesLine.Init();
-    //         NoSeriesLine."Series Code" := 'GF';
-    //         NoSeriesLine."Starting No." := 'GF0000';
-    //         NoSeriesLine."Ending No." := 'GF9999';
-    //         NoSeriesLine.Insert(true);
+            NoSeriesLine.Init();
+            NoSeriesLine."Series Code" := 'GF';
+            NoSeriesLine."Starting No." := 'GF0000';
+            NoSeriesLine."Ending No." := 'GF9999';
+            NoSeriesLine.Insert(true);
+        end;
 
-    //         NoSeries."Default Nos." := true;
-    //         NoSeries."Manual Nos." := false;
-    //         NoSeries.Insert(true);
+        if SalesReceivables.Get() then begin
+            SalesReceivables."PTE Gudfood Item Nos." := 'GF';
+            SalesReceivables.Modify(true);
+        end else begin
+            SalesReceivables.Init();
+            SalesReceivables."PTE Gudfood Item Nos." := 'GF';
+            SalesReceivables.Insert(true);
+        end;
+    end;
 
-    //         SalesReceivables.Init();
-    //         SalesReceivables."PTE Gudfood Item Nos." := 'GF';
-    //         SalesReceivables.Insert(true);
-    //     end;
+    [Test]
+    procedure TestNoSeriesForTables()
+    var
+        Item: Record "PTE Gudfood Item";
+        SalesReceivables: Record "Sales & Receivables Setup";
+    begin
+        SalesReceivables.Get();
+        Assert.IsTrue(SalesReceivables."PTE Gudfood Item Nos." <> '', 'No Series for Item should be assigned');
 
-    // end;
+        Item.Init();
+        Item.Description := 'Random Description';
+        Item.Insert(true);
 
-    // [Test]
-    // procedure TestNoSeriesForTables()
-    // var
-    //     Item: Record "PTE Gudfood Item";
-    //     SalesReceivables: Record "Sales & Receivables Setup";
-    // begin
-    //     Assert.IsTrue(SalesReceivables."PTE Gudfood Item Nos." <> '', 'No Series for Item should be assigned');
-
-    //     Item.Init();
-    //     Item.Description := 'Random Description';
-    //     Item.Insert(true);
-
-    //     Assert.IsTrue(Item."No." <> '', 'Item No. should be automatically assigned');
-    // end;
+        Assert.IsTrue(Item."No." <> '', 'Item No. should be automatically assigned');
+    end;
 
     [Test]
     procedure TestCreateItem()
