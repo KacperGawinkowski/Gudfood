@@ -9,24 +9,10 @@ codeunit 50350 "PTE Gudfood Table Tests"
 
     local procedure CheckAndAssignNoSeries()
     var
-        NoSeries: Record "No. Series";
-        NoSeriesLine: Record "No. Series Line";
         SalesReceivables: Record "Sales & Receivables Setup";
     begin
-        if not NoSeries.Get('GF') then begin
-            NoSeries.Init();
-            NoSeries.Code := 'GF';
-            NoSeries."Default Nos." := true;
-            NoSeries."Manual Nos." := false;
-            NoSeries.Insert(true);
-
-            NoSeriesLine.Init();
-            NoSeriesLine."Series Code" := 'GF';
-            NoSeriesLine."Starting No." := 'GF0000';
-            NoSeriesLine."Ending No." := 'GF9999';
-            NoSeriesLine.Insert(true);
-        end;
-
+        //No Series for Gudfood Item
+        SetNoSeries('GF', 'GF10000', 'GF99999');
         if SalesReceivables.Get() then begin
             SalesReceivables."PTE Gudfood Item Nos." := 'GF';
             SalesReceivables.Modify(true);
@@ -36,20 +22,8 @@ codeunit 50350 "PTE Gudfood Table Tests"
             SalesReceivables.Insert(true);
         end;
 
-        if not NoSeries.Get('GFO') then begin
-            NoSeries.Init();
-            NoSeries.Code := 'GFO';
-            NoSeries."Default Nos." := true;
-            NoSeries."Manual Nos." := false;
-            NoSeries.Insert(true);
-
-            NoSeriesLine.Init();
-            NoSeriesLine."Series Code" := 'GFO';
-            NoSeriesLine."Starting No." := 'GFO0000';
-            NoSeriesLine."Ending No." := 'GFO9999';
-            NoSeriesLine.Insert(true);
-        end;
-
+        //No Series for Gudfood Order
+        SetNoSeries('GFO', 'GFO10000', 'GFO99999');
         if SalesReceivables.Get() then begin
             SalesReceivables."PTE Gudfood Order Header Nos." := 'GFO';
             SalesReceivables.Modify(true);
@@ -59,20 +33,8 @@ codeunit 50350 "PTE Gudfood Table Tests"
             SalesReceivables.Insert(true);
         end;
 
-        if not NoSeries.Get('GFO-P') then begin
-            NoSeries.Init();
-            NoSeries.Code := 'GFO-P';
-            NoSeries."Default Nos." := true;
-            NoSeries."Manual Nos." := false;
-            NoSeries.Insert(true);
-
-            NoSeriesLine.Init();
-            NoSeriesLine."Series Code" := 'GFO-P';
-            NoSeriesLine."Starting No." := 'GFO-P0000';
-            NoSeriesLine."Ending No." := 'GFO-P9999';
-            NoSeriesLine.Insert(true);
-        end;
-
+        //No Series for Posted Gudfood Order
+        SetNoSeries('GF', 'GFO-P10000', 'GFO-P99999');
         if SalesReceivables.Get() then begin
             SalesReceivables."PTE Posted Gudfood Order Nos." := 'GFO-P';
             SalesReceivables.Modify(true);
@@ -80,6 +42,26 @@ codeunit 50350 "PTE Gudfood Table Tests"
             SalesReceivables.Init();
             SalesReceivables."PTE Posted Gudfood Order Nos." := 'GFO-P';
             SalesReceivables.Insert(true);
+        end;
+    end;
+
+    local procedure SetNoSeries(NoCode: Code[20]; StartingNo: Code[20]; EndingNo: Code[20])
+    var
+        NoSeries: Record "No. Series";
+        NoSeriesLine: Record "No. Series Line";
+    begin
+        if not NoSeries.Get(NoCode) then begin
+            NoSeries.Init();
+            NoSeries.Code := NoCode;
+            NoSeries."Default Nos." := true;
+            NoSeries."Manual Nos." := false;
+            NoSeries.Insert(true);
+
+            NoSeriesLine.Init();
+            NoSeriesLine."Series Code" := NoCode;
+            NoSeriesLine."Starting No." := StartingNo;
+            NoSeriesLine."Ending No." := EndingNo;
+            NoSeriesLine.Insert(true);
         end;
     end;
 
