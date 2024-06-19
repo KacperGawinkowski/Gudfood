@@ -7,6 +7,10 @@ page 50300 "PTE Gudfood Item List"
     UsageCategory = Lists;
     CardPageId = "PTE Gudfood Item Card";
     Editable = false; //for some reason it stopped disabling New,Edit,Delete actions on the list page
+    // DeleteAllowed = false;
+    // InsertAllowed = false;
+    // ModifyAllowed = false;
+    //And for some reason disallowing the inserting, deleting and modifying the list doesnt work also
 
 
     layout

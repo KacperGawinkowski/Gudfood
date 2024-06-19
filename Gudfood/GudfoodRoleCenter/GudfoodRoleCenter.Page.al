@@ -14,10 +14,16 @@ page 50325 "PTE Gudfood Role Center"
             {
                 ApplicationArea = All;
             }
-            part(GudfoodCues; "PTE Gudfood RC Cues")
+
+            part(GudfoodCues; "PTE Gudfood RC Order Cues")
             {
                 ApplicationArea = All;
             }
+            part(GudfoodCues2; "PTE Gudfood RC Earnings Cues")
+            {
+                ApplicationArea = All;
+            }
+
             part(ItemsPart; "PTE Gudfood RC Items")
             {
                 ApplicationArea = All;
