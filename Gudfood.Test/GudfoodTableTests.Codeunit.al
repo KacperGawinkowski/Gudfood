@@ -2,55 +2,90 @@ codeunit 50350 "PTE Gudfood Table Tests"
 {
     Subtype = Test;
 
-    // trigger OnRun()
-    // var
-    //     TableNos: Record "Sales & Receivables Setup";
-    //     NoSeries: Record "No. Series";
-    // begin
-    //     CheckAndAssignNoSeries();
-    // end;
+    trigger OnRun()
+    begin
+        CheckAndAssignNoSeries();
+    end;
 
-    // local procedure CheckAndAssignNoSeries()
-    // var
-    //     NoSeries: Record "No. Series";
-    //     NoSeriesLine: Record "No. Series Line";
-    //     SalesReceivables: Record "Sales & Receivables Setup";
-    // begin
-    //     if not NoSeries.Get('GF') then begin
-    //         NoSeries.Init();
-    //         NoSeries.Code := 'GF';
+    local procedure CheckAndAssignNoSeries()
+    var
+        SalesReceivables: Record "Sales & Receivables Setup";
+    begin
+        //No Series for Gudfood Item
+        SetNoSeries('GF', 'GF10000', 'GF99999');
+        if SalesReceivables.Get() then begin
+            SalesReceivables."PTE Gudfood Item Nos." := 'GF';
+            SalesReceivables.Modify(true);
+        end else begin
+            SalesReceivables.Init();
+            SalesReceivables."PTE Gudfood Item Nos." := 'GF';
+            SalesReceivables.Insert(true);
+        end;
 
-    //         NoSeriesLine.Init();
-    //         NoSeriesLine."Series Code" := 'GF';
-    //         NoSeriesLine."Starting No." := 'GF0000';
-    //         NoSeriesLine."Ending No." := 'GF9999';
-    //         NoSeriesLine.Insert(true);
+        //No Series for Gudfood Order
+        SetNoSeries('GFO', 'GFO10000', 'GFO99999');
+        if SalesReceivables.Get() then begin
+            SalesReceivables."PTE Gudfood Order Header Nos." := 'GFO';
+            SalesReceivables.Modify(true);
+        end else begin
+            SalesReceivables.Init();
+            SalesReceivables."PTE Gudfood Order Header Nos." := 'GFO';
+            SalesReceivables.Insert(true);
+        end;
 
-    //         NoSeries."Default Nos." := true;
-    //         NoSeries."Manual Nos." := false;
-    //         NoSeries.Insert(true);
+        //No Series for Posted Gudfood Order
+        SetNoSeries('GF', 'GFO-P10000', 'GFO-P99999');
+        if SalesReceivables.Get() then begin
+            SalesReceivables."PTE Posted Gudfood Order Nos." := 'GFO-P';
+            SalesReceivables.Modify(true);
+        end else begin
+            SalesReceivables.Init();
+            SalesReceivables."PTE Posted Gudfood Order Nos." := 'GFO-P';
+            SalesReceivables.Insert(true);
+        end;
+    end;
 
-    //         SalesReceivables.Init();
-    //         SalesReceivables."PTE Gudfood Item Nos." := 'GF';
-    //         SalesReceivables.Insert(true);
-    //     end;
+    local procedure SetNoSeries(NoCode: Code[20]; StartingNo: Code[20]; EndingNo: Code[20])
+    var
+        NoSeries: Record "No. Series";
+        NoSeriesLine: Record "No. Series Line";
+    begin
+        if not NoSeries.Get(NoCode) then begin
+            NoSeries.Init();
+            NoSeries.Code := NoCode;
+            NoSeries."Default Nos." := true;
+            NoSeries."Manual Nos." := false;
+            NoSeries.Insert(true);
 
-    // end;
+            NoSeriesLine.Init();
+            NoSeriesLine."Series Code" := NoCode;
+            NoSeriesLine."Starting No." := StartingNo;
+            NoSeriesLine."Ending No." := EndingNo;
+            NoSeriesLine.Insert(true);
+        end;
+    end;
 
-    // [Test]
-    // procedure TestNoSeriesForTables()
-    // var
-    //     Item: Record "PTE Gudfood Item";
-    //     SalesReceivables: Record "Sales & Receivables Setup";
-    // begin
-    //     Assert.IsTrue(SalesReceivables."PTE Gudfood Item Nos." <> '', 'No Series for Item should be assigned');
+    [Test]
+    procedure TestNoSeriesForTables()
+    var
+        Item: Record "PTE Gudfood Item";
+        Order: Record "PTE Gudfood Order Header";
+        SalesReceivables: Record "Sales & Receivables Setup";
+    begin
+        SalesReceivables.Get();
+        Assert.IsTrue(SalesReceivables."PTE Gudfood Item Nos." = 'GF', 'No Series for Item should have been assigned');
+        Assert.IsTrue(SalesReceivables."PTE Gudfood Order Header Nos." = 'GFO', 'No Series for Order should have been assigned');
+        Assert.IsTrue(SalesReceivables."PTE Posted Gudfood Order Nos." = 'GFO-P', 'No Series for Posted Order should have been assigned');
 
-    //     Item.Init();
-    //     Item.Description := 'Random Description';
-    //     Item.Insert(true);
+        Item.Init();
+        Item.Insert(true);
 
-    //     Assert.IsTrue(Item."No." <> '', 'Item No. should be automatically assigned');
-    // end;
+        Order.Init();
+        Order.Insert(true);
+
+        Assert.IsTrue(Item."No." <> '', 'Item No. should be automatically assigned');
+        Assert.IsTrue(Order."No." <> '', 'Order No. should be automatically assigned');
+    end;
 
     [Test]
     procedure TestCreateItem()
@@ -96,10 +131,12 @@ codeunit 50350 "PTE Gudfood Table Tests"
     procedure TestPostOrder()
     var
         Order: Record "PTE Gudfood Order Header";
+        OrderLine: Record "PTE Gudfood Order Line";
         PostedOrder: Record "PTE Posted GF Order Header";
         PostCodeunit: Codeunit "PTE Post Order";
         OrderCounter: Integer;
         PostedOrderCounter: Integer;
+        OrderLineCounter: Integer;
     begin
         Order.Init();
         OrderCounter := Order.Count();
@@ -110,11 +147,19 @@ codeunit 50350 "PTE Gudfood Table Tests"
         Order.Insert(true);
         Assert.IsTrue(Order.Count() = OrderCounter + 1, 'Order.Count should have increased by 1');
 
+        OrderLine.Init();
+        OrderLineCounter := OrderLine.Count();
+        OrderLine."Order No." := Order."No.";
+        OrderLine.Insert(true);
+
+        Assert.IsTrue(OrderLine.Count() = OrderLineCounter + 1, 'Order Lines Count shouold have increased by 1');
 
         PostedOrderCounter := PostedOrder.Count();
         PostCodeunit.PostOrder(Order);
         Assert.IsTrue(Order.Count() = OrderCounter, 'Order.Count should have been back to original number');
         Assert.IsTrue(PostedOrder.Count() = PostedOrderCounter + 1, 'PostedOrder.Count should have increased by 1');
+
+        Assert.IsTrue(OrderLine.Count() = OrderLineCounter, 'Order Lines Count shouold be equal to original number');
 
         PostedOrder.Get(Order."Posting No.");
         PostedOrder.Delete(true);
