@@ -47,7 +47,10 @@ page 50300 "PTE Gudfood Item List"
         }
         area(FactBoxes)
         {
-            part(FactBox; "PTE Photo Fact Box") { }
+            part(FactBox; "PTE Photo Fact Box")
+            {
+                SubPageLink = "No." = FIELD("No.");
+            }
         }
     }
 }
