@@ -6,6 +6,8 @@ codeunit 50300 "PTE Post Order"
         PostedOrderLine: Record "PTE Posted GF Order Line";
         OrderLine: Record "PTE Gudfood Order Line";
     begin
+        //Should I lock the tables in the posting procedure?
+
         PostedOrderHeader.Init();
         PostedOrderHeader.TransferFields(Rec);
         PostedOrderHeader."Posting No." := Rec."Posting No.";

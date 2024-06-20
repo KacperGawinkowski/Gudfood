@@ -17,12 +17,28 @@ page 50327 "PTE Gudfood RC Order Cues"
                 {
                     Caption = 'Orders Today';
                     ToolTip = 'Displays the number of todays orders';
-                    //Could be clickable and open the list only with todays orders
+                    DrillDown = true;
+
+                    trigger OnDrillDown()
+                    var
+                        Order: Record "PTE Gudfood Order Header";
+                        OrderPage: Page "PTE Gudfood Orders List";
+                    begin
+                        Order.SetRange("Order date", Today);
+                        OrderPage.SetTableView(Order);
+                        OrderPage.Run();
+                    end;
                 }
                 field("Items in order today"; ItemsInOrder)
                 {
                     Caption = 'Items in order today';
                     ToolTip = 'Displays the number of items that are in order today';
+                    DrillDown = true;
+
+                    trigger OnDrillDown()
+                    begin
+                        //Somehow display the orderedItemsPage only with items that are in order for today
+                    end;
                 }
             }
         }
