@@ -73,7 +73,7 @@ page 50306 "PTE Gudfood Orders List"
                     OrderRec: Record "PTE GudFood Order Header";
                     FileManagement: Codeunit "File Management";
                     TempBlob: Codeunit "Temp Blob";
-                    XmlExport: XmlPort "PTE Export Gudfood Order";
+                    Xml: XmlPort "PTE Export Gudfood Order";
                     InStr: InStream;
                     OutStr: OutStream;
                     FileName: Text;
@@ -82,9 +82,9 @@ page 50306 "PTE Gudfood Orders List"
                     TempBlob.CreateOutStream(OutStr);
                     OrderRec.SetFilter("No.", Rec."No.");
 
-                    XmlExport.SetTableView(OrderRec);
-                    XmlExport.SetDestination(OutStr);
-                    XmlExport.Export();
+                    Xml.SetTableView(OrderRec);
+                    Xml.SetDestination(OutStr);
+                    Xml.Export();
 
                     TempBlob.CreateInStream(InStr);
                     File.DownloadFromStream(InStr, downloadTxt, '', FileManagement.GetToFilterText('', FileName), FileName);
@@ -105,7 +105,7 @@ page 50306 "PTE Gudfood Orders List"
                     OrderRec: Record "PTE GudFood Order Header";
                     FileManagement: Codeunit "File Management";
                     TempBlob: Codeunit "Temp Blob";
-                    XmlExport: XmlPort "PTE Export Gudfood Order";
+                    Xml: XmlPort "PTE Export Gudfood Order";
                     InStr: InStream;
                     OutStr: OutStream;
                     FileName: Text;
@@ -114,12 +114,37 @@ page 50306 "PTE Gudfood Orders List"
                     FileName := 'selected_orders_export.xml';
                     TempBlob.CreateOutStream(OutStr);
 
-                    XmlExport.SetTableView(OrderRec);
-                    XmlExport.SetDestination(OutStr);
-                    XmlExport.Export();
+                    Xml.SetTableView(OrderRec);
+                    Xml.SetDestination(OutStr);
+                    Xml.Export();
 
                     TempBlob.CreateInStream(InStr);
                     File.DownloadFromStream(InStr, downloadTxt, '', FileManagement.GetToFilterText('', FileName), FileName);
+                end;
+            }
+
+            action("Import Orders")
+            {
+                ApplicationArea = All;
+                Caption = 'Import Orders';
+                ToolTip = 'Imports Orders from the XML file';
+                Image = Import;
+
+                trigger OnAction()
+                var
+                    FileManagement: Codeunit "File Management";
+                    TempBlob: Codeunit "Temp Blob";
+                    Xml: XmlPort "PTE Export Gudfood Order";
+                    InStr: InStream;
+                    DialogTitleTxt: Label 'Select the file to import...';
+
+                begin
+                    if FileManagement.BLOBImport(TempBlob, DialogTitleTxt) = '' then
+                        Error('File import was canceled.');
+
+                    TempBlob.CreateInStream(InStr);
+                    Xml.SetSource(InStr);
+                    Xml.Import();
                 end;
             }
         }

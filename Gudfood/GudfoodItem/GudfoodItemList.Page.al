@@ -53,4 +53,99 @@ page 50300 "PTE Gudfood Item List"
             }
         }
     }
+
+    actions
+    {
+        area(Reporting)
+        {
+            action("Export Item")
+            {
+                ApplicationArea = All;
+                Caption = 'Export Item to XML';
+                ToolTip = 'Export Item to XML file';
+                Image = CreateXMLFile;
+
+                trigger OnAction()
+                var
+                    ItemRec: Record "PTE GudFood Item";
+                    FileManagement: Codeunit "File Management";
+                    TempBlob: Codeunit "Temp Blob";
+                    Xml: XmlPort "PTE Export Gudfood Item";
+                    InStr: InStream;
+                    OutStr: OutStream;
+                    FileName: Text;
+                begin
+                    FileName := Rec."No." + '_export.xml';
+                    TempBlob.CreateOutStream(OutStr);
+                    ItemRec.SetFilter("No.", Rec."No.");
+
+                    Xml.SetTableView(ItemRec);
+                    Xml.SetDestination(OutStr);
+                    Xml.Export();
+
+                    TempBlob.CreateInStream(InStr);
+                    File.DownloadFromStream(InStr, downloadTxt, '', FileManagement.GetToFilterText('', FileName), FileName);
+                end;
+            }
+
+            action("Export Selected Items")
+            {
+                ApplicationArea = All;
+                Caption = 'Export Selected Items To XML';
+                ToolTip = 'Export Selected Items to XML file';
+                Image = CreateXMLFile;
+                //Promoted = true;
+                //PromotedCategory = Process;
+
+                trigger OnAction()
+                var
+                    ItemRec: Record "PTE GudFood Item";
+                    FileManagement: Codeunit "File Management";
+                    TempBlob: Codeunit "Temp Blob";
+                    Xml: XmlPort "PTE Export Gudfood Item";
+                    InStr: InStream;
+                    OutStr: OutStream;
+                    FileName: Text;
+                begin
+                    CurrPage.SetSelectionFilter(ItemRec);
+                    FileName := 'selected_items_export.xml';
+                    TempBlob.CreateOutStream(OutStr);
+
+                    Xml.SetTableView(ItemRec);
+                    Xml.SetDestination(OutStr);
+                    Xml.Export();
+
+                    TempBlob.CreateInStream(InStr);
+                    File.DownloadFromStream(InStr, downloadTxt, '', FileManagement.GetToFilterText('', FileName), FileName);
+                end;
+            }
+
+            action("Import Items")
+            {
+                ApplicationArea = All;
+                Caption = 'Import Items';
+                ToolTip = 'Imports items from the XML file';
+                Image = Import;
+
+                trigger OnAction()
+                var
+                    FileManagement: Codeunit "File Management";
+                    TempBlob: Codeunit "Temp Blob";
+                    Xml: XmlPort "PTE Export Gudfood Item";
+                    InStr: InStream;
+                    DialogTitleTxt: Label 'Select the file to import...';
+
+                begin
+                    if FileManagement.BLOBImport(TempBlob, DialogTitleTxt) = '' then
+                        Error('File import was canceled.');
+
+                    TempBlob.CreateInStream(InStr);
+                    Xml.SetSource(InStr);
+                    Xml.Import();
+                end;
+            }
+        }
+    }
+    var
+        downloadTxt: Label 'Download', MaxLength = 999, Locked = false;
 }
