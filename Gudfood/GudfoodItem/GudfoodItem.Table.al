@@ -97,6 +97,12 @@ table 50300 "PTE Gudfood Item"
     }
 
     trigger OnInsert()
+    var
+        // TempBlob: Codeunit "Temp Blob";
+        // OutStr: OutStream;
+        // InStr: InStream;
+        // Base64Converter: Codeunit "Base64 Convert";
+        Converter: Codeunit "PTE Picture Manager";
     begin
         if "No." = '' then begin
             SalesSetup.Get();
@@ -106,6 +112,13 @@ table 50300 "PTE Gudfood Item"
                 "No. Series" := xRec."No. Series";
             "No." := NoSeries.GetNextNo("No. Series");
         end;
+
+        // Loading the Picture from the base64 string if the picture doesnt have value, but there is a base64 string
+        if PictureBase64.HasValue and not Picture.HasValue then begin
+            Message('Item with no: %1 had no Picture, but had PictureBase64');
+            Converter.SetPictureBasedOnBase64(Rec);
+        end;
+
     end;
 
     var
