@@ -64,23 +64,35 @@ page 50301 "PTE Gudfood Item Card"
 
     actions
     {
-        area(Creation)
+        area(Processing)
         {
             action("Upload Picture")
             {
                 Caption = 'Upload Picture';
                 ToolTip = 'Upload a picture for this item.';
                 ApplicationArea = All;
-                Promoted = true;
-                PromotedCategory = Process;
                 Image = Import;
 
                 trigger OnAction()
                 var
-                    UploadMng: Codeunit "PTE File Management";
+                    UploadMng: Codeunit "PTE Picture Manager";
                 begin
                     UploadMng.UploadFile(Rec);
-                    CurrPage.Update(false); // Refresh the page to show the new image
+                    CurrPage.Update(false);
+                end;
+            }
+
+            action("Remove Picture")
+            {
+                Caption = 'Remove Picture';
+                ToolTip = 'Removes this items picture.';
+                ApplicationArea = All;
+                Image = Delete;
+
+                trigger OnAction()
+                begin
+                    Clear(Rec.Picture);
+                    Rec.Modify();
                 end;
             }
         }

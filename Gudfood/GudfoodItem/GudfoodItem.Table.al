@@ -79,6 +79,13 @@ table 50300 "PTE Gudfood Item"
             ToolTip = 'Specifies the value of the Picture field.';
             DataClassification = CustomerContent;
         }
+
+        field(10; PictureBase64; Blob)
+        {
+            Caption = 'Picture in Base64';
+            ToolTip = 'Specifies the value of the PictureBase64 field.';
+            DataClassification = CustomerContent;
+        }
     }
 
     keys

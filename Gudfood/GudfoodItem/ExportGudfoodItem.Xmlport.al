@@ -15,6 +15,7 @@ xmlport 50301 "PTE Export Gudfood Item"
                 fieldattribute("Shelf_Life"; Item."Shelf Life") { }
                 //TODO:
                 //Store the Picture of an item by encoding it to Base64 format
+                fieldattribute(Picture; Item.PictureBase64) { Width = 100000000; }
             }
         }
     }

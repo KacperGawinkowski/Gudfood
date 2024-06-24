@@ -78,6 +78,7 @@ page 50300 "PTE Gudfood Item List"
                     FileName := Rec."No." + '_export.xml';
                     TempBlob.CreateOutStream(OutStr);
                     ItemRec.SetFilter("No.", Rec."No.");
+                    Message('TEST %1', ItemRec.PictureBase64);
 
                     Xml.SetTableView(ItemRec);
                     Xml.SetDestination(OutStr);
