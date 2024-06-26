@@ -65,29 +65,10 @@ page 50306 "PTE Gudfood Orders List"
                 Caption = 'Export To XML';
                 ToolTip = 'Export Order to XML file';
                 Image = CreateXMLFile;
-                //Promoted = true;
-                //PromotedCategory = Process;
 
                 trigger OnAction()
-                var
-                    OrderRec: Record "PTE GudFood Order Header";
-                    FileManagement: Codeunit "File Management";
-                    TempBlob: Codeunit "Temp Blob";
-                    Xml: XmlPort "PTE Export Gudfood Order";
-                    InStr: InStream;
-                    OutStr: OutStream;
-                    FileName: Text;
                 begin
-                    FileName := Rec."No." + '_export.xml';
-                    TempBlob.CreateOutStream(OutStr);
-                    OrderRec.SetFilter("No.", Rec."No.");
-
-                    Xml.SetTableView(OrderRec);
-                    Xml.SetDestination(OutStr);
-                    Xml.Export();
-
-                    TempBlob.CreateInStream(InStr);
-                    File.DownloadFromStream(InStr, downloadTxt, '', FileManagement.GetToFilterText('', FileName), FileName);
+                    ExportImportOrder.ExportOrder(Rec);
                 end;
             }
 
@@ -97,29 +78,13 @@ page 50306 "PTE Gudfood Orders List"
                 Caption = 'Export Selected To XML';
                 ToolTip = 'Export Selected Orders to XML file';
                 Image = CreateXMLFile;
-                //Promoted = true;
-                //PromotedCategory = Process;
 
                 trigger OnAction()
                 var
-                    OrderRec: Record "PTE GudFood Order Header";
-                    FileManagement: Codeunit "File Management";
-                    TempBlob: Codeunit "Temp Blob";
-                    Xml: XmlPort "PTE Export Gudfood Order";
-                    InStr: InStream;
-                    OutStr: OutStream;
-                    FileName: Text;
+                    SelectedOrders: Record "PTE Gudfood Order Header";
                 begin
-                    CurrPage.SetSelectionFilter(OrderRec);
-                    FileName := 'selected_orders_export.xml';
-                    TempBlob.CreateOutStream(OutStr);
-
-                    Xml.SetTableView(OrderRec);
-                    Xml.SetDestination(OutStr);
-                    Xml.Export();
-
-                    TempBlob.CreateInStream(InStr);
-                    File.DownloadFromStream(InStr, downloadTxt, '', FileManagement.GetToFilterText('', FileName), FileName);
+                    CurrPage.SetSelectionFilter(SelectedOrders);
+                    ExportImportOrder.ExportOrders(Rec, SelectedOrders);
                 end;
             }
 
@@ -131,24 +96,12 @@ page 50306 "PTE Gudfood Orders List"
                 Image = Import;
 
                 trigger OnAction()
-                var
-                    FileManagement: Codeunit "File Management";
-                    TempBlob: Codeunit "Temp Blob";
-                    Xml: XmlPort "PTE Export Gudfood Order";
-                    InStr: InStream;
-                    DialogTitleTxt: Label 'Select the file to import...';
-
                 begin
-                    if FileManagement.BLOBImport(TempBlob, DialogTitleTxt) = '' then
-                        Error('File import was canceled.');
-
-                    TempBlob.CreateInStream(InStr);
-                    Xml.SetSource(InStr);
-                    Xml.Import();
+                    ExportImportOrder.ImportOrder();
                 end;
             }
         }
     }
     var
-        downloadTxt: Label 'Download', MaxLength = 999, Locked = false;
+        ExportImportOrder: Codeunit "PTE Export Import Order";
 }

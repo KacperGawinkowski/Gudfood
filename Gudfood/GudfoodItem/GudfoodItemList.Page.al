@@ -6,11 +6,10 @@ page 50300 "PTE Gudfood Item List"
     SourceTable = "PTE Gudfood Item";
     UsageCategory = Lists;
     CardPageId = "PTE Gudfood Item Card";
-    Editable = false; //for some reason it stopped disabling New,Edit,Delete actions on the list page
+    Editable = false;
     DeleteAllowed = false;
     InsertAllowed = false;
     ModifyAllowed = false;
-    //And for some reason disallowing the inserting, deleting and modifying the list doesnt work also
 
 
     layout
@@ -66,26 +65,8 @@ page 50300 "PTE Gudfood Item List"
                 Image = CreateXMLFile;
 
                 trigger OnAction()
-                var
-                    ItemRec: Record "PTE GudFood Item";
-                    FileManagement: Codeunit "File Management";
-                    TempBlob: Codeunit "Temp Blob";
-                    Xml: XmlPort "PTE Export Gudfood Item";
-                    InStr: InStream;
-                    OutStr: OutStream;
-                    FileName: Text;
                 begin
-                    FileName := Rec."No." + '_export.xml';
-                    TempBlob.CreateOutStream(OutStr);
-                    ItemRec.SetFilter("No.", Rec."No.");
-
-                    Xml.SetTableView(ItemRec);
-                    Xml.SetDestination(OutStr);
-                    xml.SetBase64Picture(Rec);
-                    Xml.Export();
-
-                    TempBlob.CreateInStream(InStr);
-                    File.DownloadFromStream(InStr, downloadTxt, '', FileManagement.GetToFilterText('', FileName), FileName);
+                    ExportImportItem.ExportItem(Rec);
                 end;
             }
 
@@ -98,25 +79,10 @@ page 50300 "PTE Gudfood Item List"
 
                 trigger OnAction()
                 var
-                    ItemRec: Record "PTE GudFood Item";
-                    FileManagement: Codeunit "File Management";
-                    TempBlob: Codeunit "Temp Blob";
-                    Xml: XmlPort "PTE Export Gudfood Item";
-                    InStr: InStream;
-                    OutStr: OutStream;
-                    FileName: Text;
+                    SelectedItems: Record "PTE Gudfood Item";
                 begin
-                    CurrPage.SetSelectionFilter(ItemRec);
-                    FileName := 'selected_items_export.xml';
-                    TempBlob.CreateOutStream(OutStr);
-
-                    Xml.SetTableView(ItemRec);
-                    Xml.SetDestination(OutStr);
-                    xml.SetBase64Picture(Rec);
-                    Xml.Export();
-
-                    TempBlob.CreateInStream(InStr);
-                    File.DownloadFromStream(InStr, downloadTxt, '', FileManagement.GetToFilterText('', FileName), FileName);
+                    CurrPage.SetSelectionFilter(SelectedItems);
+                    ExportImportItem.ExportSelectedItems(Rec, SelectedItems);
                 end;
             }
 
@@ -128,23 +94,12 @@ page 50300 "PTE Gudfood Item List"
                 Image = Import;
 
                 trigger OnAction()
-                var
-                    FileManagement: Codeunit "File Management";
-                    TempBlob: Codeunit "Temp Blob";
-                    Xml: XmlPort "PTE Export Gudfood Item";
-                    InStr: InStream;
-                    DialogTitleTxt: Label 'Select the file to import...';
                 begin
-                    if FileManagement.BLOBImport(TempBlob, DialogTitleTxt) = '' then
-                        Error('File import was canceled.');
-
-                    TempBlob.CreateInStream(InStr);
-                    Xml.SetSource(InStr);
-                    Xml.Import();
+                    ExportImportItem.ImportItem();
                 end;
             }
         }
     }
     var
-        downloadTxt: Label 'Download', MaxLength = 999, Locked = false;
+        ExportImportItem: Codeunit "PTE Export Import Item";
 }

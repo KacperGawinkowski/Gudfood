@@ -2,7 +2,6 @@ page 50329 "PTE Gudfood RC Earnings Cues"
 {
     PageType = CardPart;
     ApplicationArea = All;
-    //SourceTable = "PTE Gudfood Order Header";
     Caption = 'Earnings';
 
     layout
@@ -70,30 +69,32 @@ page 50329 "PTE Gudfood RC Earnings Cues"
 
     local procedure GetEarningsBetween2Dates(DateFrom: Date; DateTo: Date): Decimal
     var
-        Order: Record "PTE Gudfood Order Header";
-        //OrderLine: Record "PTE Gudfood Order Line";
+        PostedOrder: Record "PTE Posted GF Order Header";
         Sum: Decimal;
     begin
-        Order.SetRange("Order Date", DateFrom, DateTo);
-        Order.SetAutoCalcFields("Total Amount");
-        if Order.FindSet() then
+        PostedOrder.SetRange("Order Date", DateFrom, DateTo);
+        PostedOrder.SetAutoCalcFields("Total Amount");
+        if PostedOrder.FindSet() then
             repeat
-                Sum += Order."Total Amount";
-            until Order.Next() = 0;
+                Sum += PostedOrder."Total Amount";
+            until PostedOrder.Next() = 0;
         exit(Sum);
     end;
 
     local procedure GetDateOfFirstOrder(): Date
     var
-        Order: Record "PTE Gudfood Order Header";
+        PostedOrder: Record "PTE Posted GF Order Header";
+        OldestPostedOrderDate: Date;
     begin
-        Order.SetCurrentKey("Order date");
-        Order.Ascending(true);
-
-        if Order.FindFirst() then
-            exit(Order."Order date")
+        PostedOrder.SetCurrentKey("Order date");
+        PostedOrder.Ascending(true);
+        if PostedOrder.FindFirst() then
+            OldestPostedOrderDate := PostedOrder."Order date"
         else
-            exit(0D);
+            OldestPostedOrderDate := 0D;
+
+
+        exit(OldestPostedOrderDate);
     end;
 
     procedure GetEarningsStyle(Value: Decimal): Text
