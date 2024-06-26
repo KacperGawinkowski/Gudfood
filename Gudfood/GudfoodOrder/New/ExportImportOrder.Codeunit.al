@@ -1,40 +1,38 @@
-codeunit 50301 "PTE Export Import Item"
+codeunit 50303 "PTE Export Import Order"
 {
-    procedure ExportItem(Rec: Record "PTE Gudfood Item")
+    procedure ExportOrder(Rec: Record "PTE Gudfood Order Header")
     var
-        ItemRec: Record "PTE GudFood Item";
+        OrderRec: Record "PTE GudFood Order Header";
         FileName: Text;
     begin
         FileName := Rec."No." + '_export.xml';
         TempBlob.CreateOutStream(OutStr);
-        ItemRec.SetFilter("No.", Rec."No.");
+        OrderRec.SetFilter("No.", Rec."No.");
 
-        Xml.SetTableView(ItemRec);
+        Xml.SetTableView(OrderRec);
         Xml.SetDestination(OutStr);
-        xml.SetBase64Picture(Rec);
         Xml.Export();
 
         TempBlob.CreateInStream(InStr);
         File.DownloadFromStream(InStr, downloadTxt, '', FileManagement.GetToFilterText('', FileName), FileName);
     end;
 
-    procedure ExportSelectedItems(Rec: Record "PTE Gudfood Item"; SelectedItems: Record "PTE Gudfood Item")
+    procedure ExportOrders(Rec: Record "PTE Gudfood Order Header"; SelectedOrders: Record "PTE Gudfood Order Header")
     var
         FileName: Text;
     begin
-        FileName := 'selected_items_export.xml';
+        FileName := 'selected_orders_export.xml';
         TempBlob.CreateOutStream(OutStr);
 
-        Xml.SetTableView(SelectedItems);
+        Xml.SetTableView(SelectedOrders);
         Xml.SetDestination(OutStr);
-        Xml.SetBase64Picture(SelectedItems);
         Xml.Export();
 
         TempBlob.CreateInStream(InStr);
         File.DownloadFromStream(InStr, downloadTxt, '', FileManagement.GetToFilterText('', FileName), FileName);
     end;
 
-    procedure ImportItem()
+    procedure ImportOrder()
     var
         DialogTitleTxt: Label 'Select the file to import...';
     begin
@@ -47,9 +45,9 @@ codeunit 50301 "PTE Export Import Item"
     end;
 
     var
-        TempBlob: Codeunit "Temp Blob";
         FileManagement: Codeunit "File Management";
-        Xml: XmlPort "PTE Export Gudfood Item";
+        TempBlob: Codeunit "Temp Blob";
+        Xml: XmlPort "PTE Export Gudfood Order";
         InStr: InStream;
         OutStr: OutStream;
         downloadTxt: Label 'Download', MaxLength = 999, Locked = false;

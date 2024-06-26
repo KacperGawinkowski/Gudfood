@@ -143,13 +143,16 @@ codeunit 50350 "PTE Gudfood Table Tests"
 
         Order."No." := '1235';
         Order."Posting No." := 'GFO-P1234';
-        Order."Order date" := 0D;
+        Order."Order date" := Today;
+        Order."Sell-to Customer No." := '30000';
         Order.Insert(true);
         Assert.IsTrue(Order.Count() = OrderCounter + 1, 'Order.Count should have increased by 1');
 
         OrderLine.Init();
         OrderLineCounter := OrderLine.Count();
         OrderLine."Order No." := Order."No.";
+        OrderLine."Item No." := 'GF0001';
+        OrderLine.Quantity := 2;
         OrderLine.Insert(true);
 
         Assert.IsTrue(OrderLine.Count() = OrderLineCounter + 1, 'Order Lines Count shouold have increased by 1');

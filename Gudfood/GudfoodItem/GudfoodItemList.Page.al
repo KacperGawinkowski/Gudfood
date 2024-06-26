@@ -79,10 +79,10 @@ page 50300 "PTE Gudfood Item List"
 
                 trigger OnAction()
                 var
-                    ItemRec: Record "PTE Gudfood Item";
+                    SelectedItems: Record "PTE Gudfood Item";
                 begin
-                    CurrPage.SetSelectionFilter(ItemRec);
-                    ExportImportItem.ExportSelectedItems(Rec, ItemRec);
+                    CurrPage.SetSelectionFilter(SelectedItems);
+                    ExportImportItem.ExportSelectedItems(Rec, SelectedItems);
                 end;
             }
 
