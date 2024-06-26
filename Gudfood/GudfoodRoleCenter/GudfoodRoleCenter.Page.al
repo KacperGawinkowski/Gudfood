@@ -5,7 +5,6 @@ page 50325 "PTE Gudfood Role Center"
     UsageCategory = Administration;
     Caption = 'Gudfood Role Center';
     RefreshOnActivate = true;
-
     layout
     {
         area(RoleCenter)

@@ -12,16 +12,15 @@ codeunit 50310 "PTE Picture Manager"
         FileManagement.BLOBImport(TempBlob, DialogTitleTxt);
         TempBlob.CreateInStream(InStream);
         ItemRec.Picture.ImportStream(InStream, PictureImportDescriptionTxt);
-        SavePictureAsBase64(ItemRec);
+        //SavePictureAsBase64(ItemRec);
         ItemRec.Modify();
     end;
 
-    procedure SavePictureAsBase64(var ItemRec: Record "PTE Gudfood Item")
+    procedure GetPictureAsBase64(var ItemRec: Record "PTE Gudfood Item"): Text
     var
         ItemTenantMedia: Record "Tenant Media";
         Base64Convert: Codeunit "Base64 Convert";
         InStream: InStream;
-        OutStream: OutStream;
         Result: Text;
     begin
         ItemTenantMedia.Get(ItemRec.Picture.MediaId);
@@ -29,35 +28,23 @@ codeunit 50310 "PTE Picture Manager"
         ItemTenantMedia.Content.CreateInStream(InStream, TextEncoding::UTF8);
         Result := Base64Convert.ToBase64(InStream, false);
 
-        Clear(ItemRec.PictureBase64);
-        ItemRec.PictureBase64.CreateOutStream(OutStream);
-        OutStream.Write(Result);
-        //ItemRec.Modify(true);
+        exit(Result);
     end;
 
-    procedure GetPictureBase64(ItemRec: Record "PTE Gudfood Item"): Text
-    var
-        InStream: InStream;
-        StreamedText: Text;
-    begin
-        ItemRec.CalcFields(PictureBase64);
-        ItemRec.PictureBase64.CreateInStream(InStream);
-        InStream.Read(StreamedText);
-        exit(StreamedText);
-    end;
-
-    procedure SetPictureBasedOnBase64(var ItemRec: Record "PTE Gudfood Item")
+    procedure ConvertBase64ToPicture(var ItemRec: Record "PTE Gudfood Item"; Base64: BigText)
     var
         Base64Convert: Codeunit "Base64 Convert";
         TempBlob: Codeunit "Temp Blob";
         InStream: InStream;
         OutStream: OutStream;
         Filename: Text;
+        Base64Text: Text;
     begin
         Clear(ItemRec.Picture);
         Filename := ItemRec.Description + '.png';
         TempBlob.CreateOutStream(OutStream);
-        Base64Convert.FromBase64(GetPictureBase64(ItemRec), OutStream);
+        Base64.GetSubText(Base64Text, 1, Base64.Length);
+        Base64Convert.FromBase64(Base64Text, OutStream);
         TempBlob.CreateInStream(InStream);
         ItemRec.Picture.ImportStream(InStream, Filename);
         ItemRec.Modify(true);

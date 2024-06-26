@@ -6,7 +6,6 @@ page 50328 "PTE Gudfood RC Items"
     SourceTable = "PTE Gudfood Item";
     Caption = 'Items with shelf life ending this week';
 
-
     layout
     {
         area(Content)
