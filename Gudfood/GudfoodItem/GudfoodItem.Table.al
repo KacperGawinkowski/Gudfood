@@ -79,6 +79,16 @@ table 50300 "PTE Gudfood Item"
             ToolTip = 'Specifies the value of the Picture field.';
             DataClassification = CustomerContent;
         }
+
+        //And actually this shouldnt be stored in the database, because we are already storing the Picture in the field above
+        //So the pictureBAse64 should be only generated so that it can be put into XMLport 
+        //and then used to generate a picture when importing the XMLport
+        // field(10; PictureBase64; Blob)
+        // {
+        //     Caption = 'Picture in Base64';
+        //     ToolTip = 'Specifies the value of the PictureBase64 field.';
+        //     DataClassification = CustomerContent;
+        // }
     }
 
     keys

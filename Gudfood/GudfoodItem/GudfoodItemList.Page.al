@@ -81,6 +81,7 @@ page 50300 "PTE Gudfood Item List"
 
                     Xml.SetTableView(ItemRec);
                     Xml.SetDestination(OutStr);
+                    xml.SetBase64Picture(Rec);
                     Xml.Export();
 
                     TempBlob.CreateInStream(InStr);
@@ -113,6 +114,7 @@ page 50300 "PTE Gudfood Item List"
 
                     Xml.SetTableView(ItemRec);
                     Xml.SetDestination(OutStr);
+                    xml.SetBase64Picture(Rec);
                     Xml.Export();
 
                     TempBlob.CreateInStream(InStr);
@@ -131,10 +133,11 @@ page 50300 "PTE Gudfood Item List"
                 var
                     FileManagement: Codeunit "File Management";
                     TempBlob: Codeunit "Temp Blob";
+                    PictureManager: Codeunit "PTE Picture Manager";
                     Xml: XmlPort "PTE Export Gudfood Item";
+                    Base64Text: BigText;
                     InStr: InStream;
                     DialogTitleTxt: Label 'Select the file to import...';
-
                 begin
                     if FileManagement.BLOBImport(TempBlob, DialogTitleTxt) = '' then
                         Error('File import was canceled.');
@@ -142,6 +145,9 @@ page 50300 "PTE Gudfood Item List"
                     TempBlob.CreateInStream(InStr);
                     Xml.SetSource(InStr);
                     Xml.Import();
+                    Base64Text := xml.GetBase64Picture();
+                    if Base64Text.Length > 0 then
+                        PictureManager.ConvertBase64ToPicture(Rec, Base64Text);
                 end;
             }
         }
