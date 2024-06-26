@@ -54,7 +54,6 @@ page 50301 "PTE Gudfood Item Card"
 
         area(FactBoxes)
         {
-            //Implement functionality to upload images when creating new items
             part(FactBox; "PTE Photo Fact Box")
             {
                 SubPageLink = "No." = FIELD("No.");

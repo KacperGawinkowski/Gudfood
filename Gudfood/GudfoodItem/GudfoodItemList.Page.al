@@ -7,9 +7,9 @@ page 50300 "PTE Gudfood Item List"
     UsageCategory = Lists;
     CardPageId = "PTE Gudfood Item Card";
     Editable = false; //for some reason it stopped disabling New,Edit,Delete actions on the list page
-    // DeleteAllowed = false;
-    // InsertAllowed = false;
-    // ModifyAllowed = false;
+    DeleteAllowed = false;
+    InsertAllowed = false;
+    ModifyAllowed = false;
     //And for some reason disallowing the inserting, deleting and modifying the list doesnt work also
 
 
@@ -95,8 +95,6 @@ page 50300 "PTE Gudfood Item List"
                 Caption = 'Export Selected Items To XML';
                 ToolTip = 'Export Selected Items to XML file';
                 Image = CreateXMLFile;
-                //Promoted = true;
-                //PromotedCategory = Process;
 
                 trigger OnAction()
                 var
@@ -133,9 +131,7 @@ page 50300 "PTE Gudfood Item List"
                 var
                     FileManagement: Codeunit "File Management";
                     TempBlob: Codeunit "Temp Blob";
-                    PictureManager: Codeunit "PTE Picture Manager";
                     Xml: XmlPort "PTE Export Gudfood Item";
-                    Base64Text: BigText;
                     InStr: InStream;
                     DialogTitleTxt: Label 'Select the file to import...';
                 begin
@@ -145,9 +141,6 @@ page 50300 "PTE Gudfood Item List"
                     TempBlob.CreateInStream(InStr);
                     Xml.SetSource(InStr);
                     Xml.Import();
-                    Base64Text := xml.GetBase64Picture();
-                    if Base64Text.Length > 0 then
-                        PictureManager.ConvertBase64ToPicture(Rec, Base64Text);
                 end;
             }
         }

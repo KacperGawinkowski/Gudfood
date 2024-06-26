@@ -12,7 +12,6 @@ codeunit 50310 "PTE Picture Manager"
         FileManagement.BLOBImport(TempBlob, DialogTitleTxt);
         TempBlob.CreateInStream(InStream);
         ItemRec.Picture.ImportStream(InStream, PictureImportDescriptionTxt);
-        //SavePictureAsBase64(ItemRec);
         ItemRec.Modify();
     end;
 
