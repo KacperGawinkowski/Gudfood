@@ -13,9 +13,10 @@ xmlport 50301 "PTE Export Gudfood Item"
                 fieldattribute("Quantity_Ordered"; Item."Qty. Ordered") { }
                 fieldattribute("Quantity_in_Order"; Item."Qty. in Order") { }
                 fieldattribute("Shelf_Life"; Item."Shelf Life") { }
-                textelement(Picture_Base64)
+                textattribute(Picture_Base64)
                 {
                     TextType = BigText;
+                    Occurrence = Optional;
                 }
 
                 trigger OnAfterInsertRecord()
@@ -33,10 +34,8 @@ xmlport 50301 "PTE Export Gudfood Item"
     var
         PictureManager: Codeunit "PTE Picture Manager";
     begin
-        if ItemRec.Picture.HasValue then begin
-            Clear(Picture_Base64);
-            Picture_Base64.AddText(PictureManager.GetPictureAsBase64(ItemRec));
-        end;
+        if ItemRec.Picture.HasValue then
+            Picture_Base64.AddText(PictureManager.GetPictureAsBase64(ItemRec))
     end;
 
     procedure GetBase64Picture(): BigText
