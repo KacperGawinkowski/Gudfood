@@ -26,17 +26,18 @@ xmlport 50301 "PTE Export Gudfood Item"
                     if Picture_Base64.Length > 0 then
                         PictureManager.ConvertBase64ToPicture(Item, Picture_Base64);
                 end;
+
+                trigger OnAfterGetRecord()
+                var
+                    PictureManager: Codeunit "PTE Picture Manager";
+                begin
+                    Clear(Picture_Base64);
+                    if Item.Picture.HasValue then
+                        Picture_Base64.AddText(PictureManager.GetPictureAsBase64(Item))
+                end;
             }
         }
     }
-
-    procedure SetBase64Picture(ItemRec: Record "PTE Gudfood Item")
-    var
-        PictureManager: Codeunit "PTE Picture Manager";
-    begin
-        if ItemRec.Picture.HasValue then
-            Picture_Base64.AddText(PictureManager.GetPictureAsBase64(ItemRec))
-    end;
 
     procedure GetBase64Picture(): BigText
     begin
