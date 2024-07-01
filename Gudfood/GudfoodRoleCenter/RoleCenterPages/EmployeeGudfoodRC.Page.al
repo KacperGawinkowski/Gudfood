@@ -1,9 +1,9 @@
-page 50325 "PTE Gudfood Role Center"
+page 50325 "PTE Employee Gudfood RC"
 {
     PageType = RoleCenter;
     ApplicationArea = All;
     UsageCategory = Administration;
-    Caption = 'Gudfood Role Center';
+    Caption = 'Employee Gudfood Role Center';
     RefreshOnActivate = true;
     layout
     {
