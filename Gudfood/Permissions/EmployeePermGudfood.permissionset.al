@@ -2,7 +2,8 @@ permissionset 50300 EmployeePermGudfood
 {
     Caption = 'Employees in Gudfood Extension';
     Assignable = true;
-    Permissions = tabledata "PTE Gudfood Item" = RIMD,
+    Permissions =
+        tabledata "PTE Gudfood Item" = RIMD,
         tabledata "PTE Gudfood Order Header" = RIMD,
         tabledata "PTE Gudfood Order Line" = RIMD,
         tabledata "PTE Posted GF Order Header" = RIMD,
@@ -36,4 +37,6 @@ permissionset 50300 EmployeePermGudfood
         page "PTE Posted GF Order" = X,
         page "PTE Posted GF Order List" = X,
         page "PTE Posted GF Order Subpage" = X;
+
+
 }

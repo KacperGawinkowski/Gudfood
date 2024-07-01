@@ -9,7 +9,7 @@
             "server": "http://locapps24",
             "serverInstance": "BC",
             "authentication": "UserPassword",
-            "startupObjectId": 50330,
+            "startupObjectId": 50325,
             "startupObjectType": "Page",
             "breakOnError": "All",
             "launchBrowser": true,

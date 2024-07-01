@@ -65,7 +65,6 @@ page 50306 "PTE Gudfood Orders List"
                 Caption = 'Export To XML';
                 ToolTip = 'Export Order to XML file';
                 Image = CreateXMLFile;
-
                 trigger OnAction()
                 begin
                     ExportImportOrder.ExportOrder(Rec);
