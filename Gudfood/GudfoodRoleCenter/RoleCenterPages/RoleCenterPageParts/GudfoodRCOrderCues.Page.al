@@ -2,7 +2,6 @@ page 50327 "PTE Gudfood RC Order Cues"
 {
     PageType = CardPart;
     ApplicationArea = All;
-    //SourceTable = "PTE Gudfood Order Header";
     Caption = 'Orders & Items';
 
     layout
@@ -33,12 +32,6 @@ page 50327 "PTE Gudfood RC Order Cues"
                 {
                     Caption = 'Items in order today';
                     ToolTip = 'Displays the number of items that are in order today';
-                    DrillDown = true;
-
-                    trigger OnDrillDown()
-                    begin
-                        //Somehow display the orderedItemsPage only with items that are in order for today
-                    end;
                 }
             }
         }
@@ -56,11 +49,9 @@ page 50327 "PTE Gudfood RC Order Cues"
         OrderHeader.SetRange("Order date", Today);
         OrdersToday := OrderHeader.Count();
 
-
         OrderHeader.SetAutoCalcFields("Total Qty");
         if OrderHeader.FindSet() then
             repeat
-                //OrderHeader.CalcFields("Total Qty");
                 ItemsInOrder += OrderHeader."Total Qty";
             until OrderHeader.Next() = 0;
     end;

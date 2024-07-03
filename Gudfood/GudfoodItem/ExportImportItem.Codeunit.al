@@ -11,7 +11,6 @@ codeunit 50301 "PTE Export Import Item"
 
         Xml.SetTableView(ItemRec);
         Xml.SetDestination(OutStr);
-        //xml.SetBase64Picture(Rec);
         Xml.Export();
 
         TempBlob.CreateInStream(InStr);

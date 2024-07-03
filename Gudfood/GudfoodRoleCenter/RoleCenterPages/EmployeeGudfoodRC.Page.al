@@ -61,7 +61,7 @@ page 50325 "PTE Employee Gudfood RC"
         {
             action("Posted Orders")
             {
-                Caption = 'Poster Orders';
+                Caption = 'Posted Orders';
                 ToolTip = 'Opens the Posted Order List';
                 ApplicationArea = All;
                 RunObject = Page "PTE Posted GF Order List";
