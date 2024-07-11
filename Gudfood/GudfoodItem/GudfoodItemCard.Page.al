@@ -85,11 +85,23 @@ page 50301 "PTE Gudfood Item Card"
                 Image = Delete;
 
                 trigger OnAction()
+                var
+                    UserCreationTxt: Label 'User %1 doesn''t exist, would you like to create a new user?', Comment = 'Specifies the userId that will be displayed in the question';
+                    aTxt: Label 'Label %1 Text', Comment = 'Foo', MaxLength = 999, Locked = true;
+                    Result: Boolean;
                 begin
-                    Clear(Rec.Picture);
-                    Rec.Modify();
+                    Result := Dialog.Confirm(UserCreationTxt, true, aTxt);
+                    if Result then
+                        Page.Run(Page::"User Card");
+                    // Clear(Rec.Picture);
+                    // Rec.Modify();
                 end;
             }
         }
     }
+    trigger OnOpenPage()
+    var
+    begin
+        Message('%1', CalcDate('<-CM>', WorkDate()));
+    end;
 }
