@@ -59,7 +59,7 @@ page 50329 "PTE Gudfood RC Earnings Cues"
         DateOfFirstOrder := GetDateOfFirstOrder();
         if DateOfFirstOrder <> 0D then begin
             MonthsBetween := Date2DMY(Today, 2) - Date2DMY(DateOfFirstOrder, 2) + 12 * (Date2DMY(Today, 3) - Date2DMY(DateOfFirstOrder, 3));
-            TotalItemsPriceAvgMonth := GetEarningsBetween2Dates(DateOfFirstOrder, PrevMonthEndDate) / MonthsBetween;
+            TotalItemsPriceAvgMonth := GetEarningsBetween2Dates(DateOfFirstOrder, PrevMonthEndDate) / (MonthsBetween + 1);
 
             ThisMonthStyle := GetEarningsStyle(TotalItemsPriceThisMonth);
             PrevMonthStyle := GetEarningsStyle(TotalItemsPricePrevMonth);

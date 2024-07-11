@@ -85,9 +85,16 @@ page 50301 "PTE Gudfood Item Card"
                 Image = Delete;
 
                 trigger OnAction()
+                var
+                    PictureRemoveTxt: Label 'Are you sure yo uwant to remove picture from this Item?', Comment = '';
+                    aTxt: Label 'Label %1 Text', Comment = 'Foo', MaxLength = 999, Locked = true;
+                    Result: Boolean;
                 begin
-                    Clear(Rec.Picture);
-                    Rec.Modify();
+                    Result := Dialog.Confirm(PictureRemoveTxt, true, aTxt);
+                    if Result then begin
+                        Clear(Rec.Picture);
+                        Rec.Modify();
+                    end;
                 end;
             }
         }

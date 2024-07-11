@@ -6,7 +6,7 @@ codeunit 50310 "PTE Picture Manager"
         TempBlob: Codeunit "Temp Blob";
         InStream: InStream;
         DialogTitleTxt: Label 'Select the file to upload...';
-        PictureImportDescriptionTxt: Label 'I dont know for what this description is';
+        PictureImportDescriptionTxt: Label 'Picture file will be used as an image of the Item';
 
     begin
         FileManagement.BLOBImport(TempBlob, DialogTitleTxt);
