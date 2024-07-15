@@ -4,6 +4,7 @@ page 50302 "PTE Photo Fact Box"
     ApplicationArea = All;
     UsageCategory = Administration;
     SourceTable = "PTE Gudfood Item";
+    Caption = 'Photo';
 
     layout
     {

@@ -44,10 +44,6 @@ page 50315 "PTE Gudfood Item API"
                 {
                     Caption = 'Shelf Life';
                 }
-                // field(picture; Rec.Picture)
-                // {
-                //     Caption = 'Picture';
-                // }
             }
         }
     }

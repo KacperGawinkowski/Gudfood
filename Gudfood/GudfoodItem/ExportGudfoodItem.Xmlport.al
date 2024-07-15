@@ -38,9 +38,4 @@ xmlport 50301 "PTE Export Gudfood Item"
             }
         }
     }
-
-    // procedure GetBase64Picture(): BigText
-    // begin
-    //     exit(Picture_Base64);
-    // end;
 }
